@@ -8,3 +8,8 @@ Personalized Agent for Genuine Connections, Personal or Professional. Discover p
 ## Jupyter Notebook
 
 + [Jupyter Notebook](workflow.ipynb)
+
+
+### MVP
+
+![alt text](figs/workflow_mvp.png "MVP")
