@@ -1,0 +1,25 @@
+Data Analyst:
+https://www.linkedin.com/in/saurav-joshi-ab58a9179/
+https://www.linkedin.com/in/shamitkikani
+https://www.linkedin.com/in/lauraangelescu
+https://www.linkedin.com/in/xiaoyan-lin
+https://www.linkedin.com/in/lalith-mannem
+HR:
+https://www.linkedin.com/in/deerice
+https://www.linkedin.com/in/alissanial
+https://www.linkedin.com/in/zoheab-rehaman
+https://www.linkedin.com/in/scottchlebos
+https://www.linkedin.com/in/otaupin
+Cybersecurity:
+https://www.linkedin.com/in/snehatalwalkar
+https://www.linkedin.com/in/michaelhmccann
+https://www.linkedin.com/in/isabellapatel
+https://www.linkedin.com/in/bkwilkins
+https://www.linkedin.com/in/ronak3shah1
+https://www.linkedin.com/in/frankahan
+Electrical:
+https://www.linkedin.com/in/philmanstjong
+https://www.linkedin.com/in/mervinthomas
+https://www.linkedin.com/in/chintanvaria
+https://www.linkedin.com/in/dasguptasandip
+https://www.linkedin.com/in/yeshake-bahita

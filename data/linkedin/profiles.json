@@ -1,0 +1,110 @@
+[{
+    "id": 1,
+    "name": "Saurav Joshi",
+    "url": "https://www.linkedin.com/in/saurav-joshi-ab58a9179/",
+    "title": "M.S. Data Science @ USC'24 | GSoC'22 @ DBpedia | ICPC'20 Regionalist",
+    "location": "Los Angeles, California",
+    "summary": "",
+    "connections": "427",
+    "experience_count": "2",
+    "experience_collection": [{
+        "title": "Research Scientist",
+        "location": "Marina del Rey, California",
+        "company": "USC Information Sciences Institute",
+        "description": "Developed a graph database by aggregating information from WikiData, PDF, and FoodKG, and created a backend design for a knowledge-powered understanding application. Extracted meaningful insights from PDFs and applied machine learning algorithms and statistical knowledge to build a recommendation system that recommended food products that are more sustainable. Awarded Best Data Science Team Leader at USC Information Sciences Institute CKIDS Datafest 2022."
+    },
+    {
+        "title": "Data Scientist",
+        "location": "Mumbai, Maharashtra",
+        "company": "GSPL",
+        "description": "Developed an end-to-end sales prediction application for a commodity firm, applied Information Gain, Chi-Square Test feature selection methods, and created an ARIMA model which improved the prediction accuracy by 12%. Constructed a Conversational AI Assistant for the Legal Industry, introducing new features namely multiple intent recognition, recommendation system that increased customer engagement and saved the company’s cost. Implemented a Few-Shot Learning Approach with Siamese Neural Network to overcome the problem of insufficient training data for the Conversation AI Assistant to improve the text classification accuracy and also designed data science and technology-related articles on Medium to help the community by sharing concepts and code."
+    }]
+},
+{
+    "id": 2,
+    "name": "Shamit Kikani",
+    "url": "https://www.linkedin.com/in/shamitkikani/",
+    "title": "Data Analyst | University of Michigan | SpaceX",
+    "location": "Los Angeles, California",
+    "summary": "Industrial Engineer specializing in Data Science and Operations Research. I aspire to work towards practical implementation of data science, machine learning and process optimization techniques for end-user and business gain.Industrial Engineer specializing in Data Science and Operations Research. I aspire to work towards practical implementation of data science, machine learning and process optimization techniques for end-user and business gain.",
+    "connections": "500+",
+    "experience_count": "2",
+    "experience_collection": [{
+        "title": "Senior Data Analyst",
+        "location": "Los Angeles, California",
+        "company": "SpaceX",
+        "description": ""
+    },
+    {
+        "title": "Supply Chain Data Analyst",
+        "location": "Piscataway, New Jersey",
+        "company": "Johnson & Johnson",
+        "description": "Developed a web-scraping algorithm in Python leading to improved tracking of consumer product shipments by 80% on strategic routes • Created a globally automated process to evaluate bids from freight carriers, and minimized transportation costs by $18mn through network optimization • Generated inventory forecasts for medical devices across 3,000 warehouses by performing time-series analysis on demand and supply data • Implemented Python scripts to extract unstructured data from websites and mailboxes, maintaining data integrity across SQL and SAP databases • Data analysis and visualizations for process flows and standardized KPIs • Social Media Chair for the ‘Intern and Co-op Association’ at J&J"
+    }]
+},
+{
+    "id": 3,
+    "name": "Scott Chlebos",
+    "url": "https://www.linkedin.com/in/scottchlebos/",
+    "title": "VP of HR & Talent",
+    "location": "Austin, Texas",
+    "summary": "My background is thriving in a startup and private equity environments in which little to no Talent Acquisition (TA) or HR processes have been created. In my career, I have had the opportunity to sit in every single HR function to allow me to gain a broad range of breadth and depth experience in TA and all other HR functions, including payroll. With my broad range of experience, I bring value to any company by being able to offset the need to hire additional headcount when most HR leaders have to because they don't have the understanding in a particular HR area.",
+    "connections": "500+",
+    "experience_count": "2",
+    "experience_collection": [{
+        "title": "VP of HR & Talent",
+        "location": "Austin, Texas",
+        "company": "Willie's Restaurants",
+        "description": "Oversee TA & HR for leading Texas based scratch brand casual dining concept. Willie's is equity backed by CIC out of Dallas. I have created a best in class HR function as we are now embarking into unprecedented growth beginning in 2023."
+    },
+    {
+        "title": "VP of HR & Talent",
+        "location": "Austin, Texas",
+        "company": "Edgile",
+        "description": "Oversaw TA & HR for Private Equity Series A leading consulting firm. Position was eliminated due to Covid-19.Oversaw TA & HR for Private Equity Series A leading consulting firm. Position was eliminated due to Covid-19."
+    }]
+},
+{
+    "id": 4,
+    "name": "Michael McCann",
+    "url": "https://www.linkedin.com/in/michaelhmccann/",
+    "title": "Georgetown Masters of Science in Finance | Senior Cybersecurity Networks Professional TS/SCI Clearance",
+    "location": "Columbia, Maryland",
+    "summary": "I am driven to achieve success at the highest level while supporting those around me. Whether that drive is applied to leading cybersecurity network analysis or engineering systems for the United States Navy, playing professional baseball for the Kansas City Royals, earning a Masters of Science in Finance from Georgetown University, or completing an Ironman race - I have always had passion for taking on a significant challenge.",
+    "connections": "500+",
+    "experience_count": "2",
+    "experience_collection": [{
+        "title": "Senior Cybersecurity Network Professional",
+        "location": "Fort George G. Meade, Maryland",
+        "company": "US Navy",
+        "description": "Senior analyst in Cyber Protection Team - Performs proactive threat hunts and reactive incident responses (IR) on customer networks in order to identify malicious cyber activities, to harden customer networks, and to provide advanced security recommendations to C-Suite level management."
+    },
+    {
+        "title": "Auditor",
+        "location": "Seattle, Washington",
+        "company": "EY",
+        "description": "Skills: Financial Analysis · General Ledgers · Microsoft PowerPoint · Microsoft Office · Microsoft Excel · Financial Reporting · Finance"
+    }]
+},
+{
+    "id": 5,
+    "name": "Philman Tjong, EIT",
+    "url": "https://www.linkedin.com/in/philmanstjong/",
+    "title": "LADWP Electrical Engineer Associate",
+    "location": "El Monte, California",
+    "summary": "My educational emphasis was in power systems/ engineering at the University of California, San Diego. I developed a particular passion for renewable energy resources and sustainability topics in the field of engineering. My philosophy in the benefit of the community/ public goes hand-in-hand with the progression of renewable energy.",
+    "connections": "490",
+    "experience_count": "2",
+    "experience_collection": [{
+        "title": "Electrical Engineer Associate 1",
+        "location": "Los Angeles County, California",
+        "company": "LADWP",
+        "description": "Currently learning and working with the Control Systems Network Engineering"
+    },
+    {
+        "title": "Electrical and Computer Engineering Instructional Assistant",
+        "location": "San Diego, California",
+        "company": "UCSD",
+        "description": "Assisted in classes pertaining to Power Grid Modernization and Power Grid Resiliency to Adverse Effects + Assisted the professor in the course material, proctoring exams, grading assignments, and tutoring any students on the course knowledge"
+    }]
+}]
