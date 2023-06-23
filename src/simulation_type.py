@@ -6,7 +6,7 @@ The `DialogueSimulator` class takes a list of agents. At each step, it performs 
 4. Update the step counter.
 The selection of the next speaker can be implemented as any function, but in this case we simply loop through the agents."""
 
-from typing import List, Dict, Callable
+from typing import List, Dict, Callable, Tuple
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
     HumanMessage,
@@ -38,7 +38,7 @@ class DialogueSimulator:
         # increment time
         self._step += 1
 
-    def step(self) -> tuple[str, str]:
+    def step(self) -> Tuple[str, str]:
         # 1. choose the next speaker
         speaker_idx = self.select_next_speaker(self._step, self.agents)
         speaker = self.agents[speaker_idx]
