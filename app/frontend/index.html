@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mindfinder - Home</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app" class="col-lg-12 mx-auto p-4">
+        <header class="d-flex pb-3 mb-5 border-bottom">
+            <div class="container">
+                <div class="d-flex flex-wrap">
+                    <img height="48" src="assets/logo.png" alt="Mindfinder Logo">
+                    <h1 class="display-6">&nbsp;&nbsp;Mindfinder</h1>
+                </div>
+
+            </div>
+        </header>
+        <main>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Set up your account</h5>
+                            <hr>
+                            <div class="mb-3">
+                                <label class="form-label">Linkedln url</label>
+                                <div class="input-group">
+                                  <span class="input-group-text">https://www.linkedin.com/in/</span>
+                                  <input type="text" class="form-control" aria-describedby="basic-addon3 basic-addon4">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="mb-3">
+                              <label class="form-label">Linkedln profile</label>
+                              <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-outline-dark">Save</button>
+
+                        </div>
+
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Set up your agent</h5>
+                            <hr>
+                            <div class="mb-3">
+                              <label class="form-label">What are you looking for</label>
+                              <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            <hr>
+                            <div class="mb-3">
+                                <label class="form-label">Salary</label>
+                                <input type="range" class="form-range" min="0" step="100" max="1000000" v-model="agent.salary">
+                                $ {{ Number(agent.salary).toLocaleString() }}
+                            </div>
+                            <hr>
+                            <div class="mb-3">
+                                <label class="form-label">Constrains</label>
+                                <br>
+                                <input type="text" class="form-control mb-2" :key="constrain.id" v-for="constrain in agent.constrains">
+                                <button type="button" class="btn btn-outline-dark" @click="addConstrain">+</button>
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-outline-dark">Save</button>
+
+                        </div>
+
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Search</h5>
+                            <hr>
+                            <div class="mb-3">
+                                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 10%"></div>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-outline-dark">Search</button>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Match</h5>
+                            <hr>
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header">
+                                    <button class="accordion-button" :class="accordion[0] ? '' : 'collapsed'" type="button" :aria-expanded="accordion[0] ? true : false" @click="collapse(0)">
+                                        Description
+                                    </button>
+                                  </h2>
+                                  <div class="accordion-collapse collapse" :class="accordion[0] ? 'show' : ''">
+                                    <div class="accordion-body">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. Maecenas vestibulum, lorem id varius feugiat, mauris leo vestibulum risus, at feugiat sapien eros eu urna. Duis euismod, erat sed luctus laoreet, felis lorem suscipit risus, ut tincidunt dolor neque ut lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus tincidunt nunc a tortor fermentum, ut commodo tellus elementum.
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header">
+                                    <button class="accordion-button" :class="accordion[1] ? '' : 'collapsed'" type="button" :aria-expanded="accordion[1] ? true : false" @click="collapse(1)">
+                                        Dialogue
+                                    </button>
+                                  </h2>
+                                  <div class="accordion-collapse collapse" :class="accordion[1] ? 'show' : ''">
+                                    <div class="accordion-body">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. Maecenas vestibulum, lorem id varius feugiat, mauris leo vestibulum risus, at feugiat sapien eros eu urna. Duis euismod, erat sed luctus laoreet, felis lorem suscipit risus, ut tincidunt dolor neque ut lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus tincidunt nunc a tortor fermentum, ut commodo tellus elementum.
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header">
+                                    <button class="accordion-button" :class="accordion[2] ? '' : 'collapsed'" type="button" :aria-expanded="accordion[1] ? true : false" @click="collapse(2)">
+                                        Agreements
+                                    </button>
+                                  </h2>
+                                  <div class="accordion-collapse collapse" :class="accordion[2] ? 'show' : ''">
+                                    <div class="accordion-body">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. 
+                                        <ul>
+                                            <li>are unaffected by this style</li>
+                                            <li>will still show a bullet</li>
+                                            <li>and have appropriate left margin</li>
+                                        </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-outline-dark">Accept</button>
+                            <button type="button" class="btn btn-outline-dark mx-2">Decline</button>
+                        </div>
+
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Contact information</h5>
+                            <hr>
+                            <div class="mb-3">
+                                <dl class="row">
+                                    <dt class="col-sm-3">Name</dt>
+                                    <dd class="col-sm-9">Lorem ipsum dolor sit amet</dd>
+                                </dl>
+                                <dl class="row">
+                                    <dt class="col-sm-3">Phone</dt>
+                                    <dd class="col-sm-9">Lorem ipsum dolor sit amet</dd>
+                                </dl>
+                                <dl class="row">
+                                    <dt class="col-sm-3">Mail</dt>
+                                    <dd class="col-sm-9">Lorem ipsum dolor sit amet</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Feedback</h5>
+                            <hr>
+                            <div class="mb-3">
+                              <label class="form-label">Comments</label>
+                              <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-outline-dark">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="pt-5 my-5 text-body-secondary border-top">
+            Created by the Mindfinder team · © 2023
+        </footer>
+    </div>
+    <script>
+        const api_url = "http://process.env.API_URL"
+        const { createApp, ref } = Vue
+        createApp({
+            data() {
+                return {
+                    identifier: "",
+                    agent: {
+                        salary: 0,
+                        constrains: []
+                    },
+                    accordion: [false, false, false]
+                }
+            },
+            methods: {
+                addConstrain() {
+                    const constrain = {
+                        id: Date.now(),
+                    };
+                    this.agent.constrains.push(constrain);
+                },
+                collapse(key) {
+                    this.accordion[key] = !this.accordion[key];
+                    console.log(this.accordion[key])
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>
