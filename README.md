@@ -3,13 +3,18 @@
 Personalized Agent for Genuine Connections, Personal or Professional. Discover potential matches for romance, friendships, or fruitful collaborations minimizing time wasted.
 
 
-![alt text](figs/logo.png "MindFounder Logo")
+![alt text](data/figs/logo.png "MindFounder Logo")
 
 ## Jupyter Notebook
 
 + [Jupyter Notebook](workflow.ipynb)
 
 
+
 ### MVP
 
-![alt text](figs/workflow_mvp.png "MVP")
+
+
+#### Backend
+
+![alt text](data/figs/workflow_mvp.png "MVP")
