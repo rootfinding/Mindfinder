@@ -25,18 +25,18 @@
         <main>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card mb-4">
+                    <div class="card mb-4" v-if="step_0">
                         <div class="card-body">
                             <h5 class="card-title">Select</h5>
                             <hr>
                             <div class="row">
                                 <div class="col-6">
-                                    <a href="">
+                                    <a href="#" @click="step_0=false; tinder_step_1=true">
                                         <img src="assets/tinder.png" class="card-img-top">
                                     </a>
                                 </div>
                                 <div class="col-6">
-                                    <a href="">
+                                    <a href="#">
                                         <img src="assets/linkedin.png" class="card-img-top">
                                     </a>
                                 </div>
@@ -45,7 +45,7 @@
                         </div>
 
                     </div>
-                    <div class="card mb-4">
+                    <div class="card mb-4" v-if="tinder_step_1">
                         <div class="card-body">
                             <h5 class="card-title">Set up your account</h5>
                             <hr>
@@ -62,12 +62,12 @@
                               <textarea class="form-control" rows="3"></textarea>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark">Save</button>
+                            <button type="button" class="btn btn-outline-dark" @click="tinder_step_1=false; tinder_step_2=true">Save</button>
 
                         </div>
 
                     </div>
-                    <div class="card mb-4">
+                    <div class="card mb-4" v-if="tinder_step_2">
                         <div class="card-body">
                             <h5 class="card-title">Set up your agent</h5>
                             <hr>
@@ -78,23 +78,23 @@
                             <hr>
                             <div class="mb-3">
                                 <label class="form-label">Salary</label>
-                                <input type="range" class="form-range" min="0" step="100" max="1000000" v-model="agent.salary">
-                                $ {{ Number(agent.salary).toLocaleString() }}
+                                <input type="range" class="form-range" min="0" step="100" max="1000000" v-model="tinder_agent.salary">
+                                $ {{ Number(tinder_agent.salary).toLocaleString() }}
                             </div>
                             <hr>
                             <div class="mb-3">
                                 <label class="form-label">Constrains</label>
                                 <br>
-                                <input type="text" class="form-control mb-2" :key="constrain.id" v-for="constrain in agent.constrains">
+                                <input type="text" class="form-control mb-2" :key="constrain.id" v-for="constrain in tinder_agent.constrains">
                                 <button type="button" class="btn btn-outline-dark" @click="tinderAddConstrain">+</button>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark" @click="configAgent()">Save</button>
+                            <button type="button" class="btn btn-outline-dark"  @click="tinder_step_2=false; tinder_step_3=true">Save</button>
 
                         </div>
 
                     </div>
-                    <div class="card mb-4">
+                    <div class="card mb-4" v-if="tinder_step_3">
                         <div class="card-body">
                             <h5 class="card-title">Search</h5>
                             <hr>
@@ -104,10 +104,10 @@
                                 </div>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark">Search</button>
+                            <button type="button" class="btn btn-outline-dark" @click="tinder_step_3=false; tinder_step_4=true">Search</button>
                         </div>
                     </div>
-                    <div class="card mb-4">
+                    <div class="card mb-4" v-if="tinder_step_4">
                         <div class="card-body">
                             <h5 class="card-title">Match</h5>
                             <hr>
@@ -155,12 +155,12 @@
                                 </div>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark">Accept</button>
-                            <button type="button" class="btn btn-outline-dark mx-2">Decline</button>
+                            <button type="button" class="btn btn-outline-dark" @click="tinder_step_4=false; tinder_step_5=true">Accept</button>
+                            <button type="button" class="btn btn-outline-dark mx-2" @click="tinder_step_4=false; tinder_step_6=true">Decline</button>
                         </div>
 
                     </div>
-                    <div class="card mb-4">
+                    <div class="card mb-4" v-if="tinder_step_5">
                         <div class="card-body">
                             <h5 class="card-title">Contact information</h5>
                             <hr>
@@ -180,7 +180,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-4">
+                    <div class="card mb-4" v-if="tinder_step_6">
                         <div class="card-body">
                             <h5 class="card-title">Feedback</h5>
                             <hr>
@@ -211,6 +211,7 @@
                         constrains: []
                     },
                     tinder_accordion: [false, false, false],
+                    step_0: true,
                     tinder_step_1: false,
                     tinder_step_2: false,
                     tinder_step_3: false,
