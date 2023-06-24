@@ -7,7 +7,7 @@ Personalized Agent for Genuine Connections, Personal or Professional. Discover p
 
 ## Jupyter Notebook
 
-+ [Jupyter Notebook](workflow.ipynb)
++ [Jupyter Notebook](workflow_changes.ipynb)
 
 
 
