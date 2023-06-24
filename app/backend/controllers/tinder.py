@@ -110,7 +110,7 @@ class TinderController:
 
         all_text = df['Text']
 
-        return contract(user_a, user_b, text_list)
+        return {'contract': contract(user_a, user_b, text_list), 'simulation': text_list}
 
     def feedback():
         return "feedback"
