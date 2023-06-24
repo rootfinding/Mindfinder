@@ -27,6 +27,26 @@
                 <div class="col-sm-12">
                     <div class="card mb-4">
                         <div class="card-body">
+                            <h5 class="card-title">Select</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="">
+                                        <img src="assets/tinder.png" class="card-img-top">
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="">
+                                        <img src="assets/linkedin.png" class="card-img-top">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
                             <h5 class="card-title">Set up your account</h5>
                             <hr>
                             <div class="mb-3">
@@ -66,10 +86,10 @@
                                 <label class="form-label">Constrains</label>
                                 <br>
                                 <input type="text" class="form-control mb-2" :key="constrain.id" v-for="constrain in agent.constrains">
-                                <button type="button" class="btn btn-outline-dark" @click="addConstrain">+</button>
+                                <button type="button" class="btn btn-outline-dark" @click="tinderAddConstrain">+</button>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark">Save</button>
+                            <button type="button" class="btn btn-outline-dark" @click="configAgent()">Save</button>
 
                         </div>
 
@@ -94,11 +114,11 @@
                             <div class="accordion">
                                 <div class="accordion-item">
                                   <h2 class="accordion-header">
-                                    <button class="accordion-button" :class="accordion[0] ? '' : 'collapsed'" type="button" :aria-expanded="accordion[0] ? true : false" @click="collapse(0)">
+                                    <button class="accordion-button" :class="tinder_accordion[0] ? '' : 'collapsed'" type="button" :aria-expanded="tinder_accordion[0] ? true : false" @click="tinderCollapse(0)">
                                         Description
                                     </button>
                                   </h2>
-                                  <div class="accordion-collapse collapse" :class="accordion[0] ? 'show' : ''">
+                                  <div class="accordion-collapse collapse" :class="tinder_accordion[0] ? 'show' : ''">
                                     <div class="accordion-body">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. Maecenas vestibulum, lorem id varius feugiat, mauris leo vestibulum risus, at feugiat sapien eros eu urna. Duis euismod, erat sed luctus laoreet, felis lorem suscipit risus, ut tincidunt dolor neque ut lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus tincidunt nunc a tortor fermentum, ut commodo tellus elementum.
                                     </div>
@@ -106,11 +126,11 @@
                                 </div>
                                 <div class="accordion-item">
                                   <h2 class="accordion-header">
-                                    <button class="accordion-button" :class="accordion[1] ? '' : 'collapsed'" type="button" :aria-expanded="accordion[1] ? true : false" @click="collapse(1)">
+                                    <button class="accordion-button" :class="tinder_accordion[1] ? '' : 'collapsed'" type="button" :aria-expanded="tinder_accordion[1] ? true : false" @click="tinderCollapse(1)">
                                         Dialogue
                                     </button>
                                   </h2>
-                                  <div class="accordion-collapse collapse" :class="accordion[1] ? 'show' : ''">
+                                  <div class="accordion-collapse collapse" :class="tinder_accordion[1] ? 'show' : ''">
                                     <div class="accordion-body">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. Maecenas vestibulum, lorem id varius feugiat, mauris leo vestibulum risus, at feugiat sapien eros eu urna. Duis euismod, erat sed luctus laoreet, felis lorem suscipit risus, ut tincidunt dolor neque ut lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus tincidunt nunc a tortor fermentum, ut commodo tellus elementum.
                                     </div>
@@ -118,11 +138,11 @@
                                 </div>
                                 <div class="accordion-item">
                                   <h2 class="accordion-header">
-                                    <button class="accordion-button" :class="accordion[2] ? '' : 'collapsed'" type="button" :aria-expanded="accordion[1] ? true : false" @click="collapse(2)">
+                                    <button class="accordion-button" :class="tinder_accordion[2] ? '' : 'collapsed'" type="button" :aria-expanded="tinder_accordion[2] ? true : false" @click="tinderCollapse(2)">
                                         Agreements
                                     </button>
                                   </h2>
-                                  <div class="accordion-collapse collapse" :class="accordion[2] ? 'show' : ''">
+                                  <div class="accordion-collapse collapse" :class="tinder_accordion[2] ? 'show' : ''">
                                     <div class="accordion-body">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. 
                                         <ul>
@@ -180,29 +200,49 @@
         </footer>
     </div>
     <script>
-        const api_url = "http://process.env.API_URL"
+        const api_url = "http://localhost:8000/api/"
         const { createApp, ref } = Vue
         createApp({
             data() {
                 return {
                     identifier: "",
-                    agent: {
+                    tinder_agent: {
                         salary: 0,
                         constrains: []
                     },
-                    accordion: [false, false, false]
+                    tinder_accordion: [false, false, false],
+                    tinder_step_1: false,
+                    tinder_step_2: false,
+                    tinder_step_3: false,
+                    tinder_step_4: false,
+                    tinder_step_5: false,
+                    tinder_step_6: false
                 }
             },
             methods: {
-                addConstrain() {
+                tinderAddConstrain() {
                     const constrain = {
                         id: Date.now(),
                     };
-                    this.agent.constrains.push(constrain);
+                    this.tinder_agent.constrains.push(constrain);
                 },
-                collapse(key) {
-                    this.accordion[key] = !this.accordion[key];
-                    console.log(this.accordion[key])
+                tinderCollapse(key) {
+                    this.tinder_accordion[key] = !this.tinder_accordion[key];
+                    console.log(this.tinder_accordion[key])
+                },
+                async configAgent() {
+                    const body = {}
+                    const response = await fetch(api_url + "tinder/agent", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(body)
+                    })
+                    const data = await response.json()
+                    if (response.status == 200) {
+                        console.log(data)
+                    } 
                 }
             }
         }).mount("#app")
