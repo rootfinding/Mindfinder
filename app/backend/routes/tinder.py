@@ -22,9 +22,8 @@ class Tinder(Resource):
         self.logger.info('Api post request')
 
         data = request.json
-
-        if method=='account':
-            response = TinderController.account(data['url'], data['profile'])
+        if method == 'match':
+            response = TinderController.match(data[0], data[1])
         if method=='agent':
             response = TinderController.agent()
         if method=='search':
