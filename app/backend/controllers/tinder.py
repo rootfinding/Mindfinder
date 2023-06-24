@@ -1,6 +1,7 @@
 import os
 import json
 import pandas as pd
+import openai
 
 with open('.creds') as f:
     creds = json.load(f)
@@ -53,10 +54,16 @@ class TinderController:
     def account():
         return ["account"]
 
-    def agent():
-        return "agent"
+    def match(user_a):
 
-    def match(user_a, user_b):
+        user_b = {
+            "name": "Franco Franza",
+            "age": 31,
+            "location": "Buenos Aires, Ar",
+            "tastes": "technology, gaming, movies, cooking, and fitness",
+            "description": "Hi, I'm Franco, I'm passionate about technology and gaming. I love keeping up with the latest technology and spending time playing video games both solo and online with friends. I also enjoy watching movies of various genres and exploring cooking, experimenting with new recipes and flavors I also care about staying fit and exercising regularly I am looking for someone to share my enthusiasm for technology, games, cooking and fitness I think we have common interests it's important to building a strong and meaningful relationship. If you're ready to dive into a world of technology, fun and adventure, swipe right and let's start this exciting connection together."
+        }
+
         userA_system_message = generate_user(user_a, user_b)
         AGENT_A = DialogueAgent(
             name=user_a['name'],
@@ -103,7 +110,43 @@ class TinderController:
 
         all_text = df['Text']
 
-        return {'user_a': user_A_text.to_list(), 'user_b': user_B_text.to_list(), 'all_text': all_text.to_list()}
+        return contract(user_a, user_b, text_list)
 
     def feedback():
         return "feedback"
+
+
+def contract(user_a, user_b, text_list):
+    description = f"""You are an agent skilled in facilitating agreements and meaningful connections between people.
+        You will be provided with a dialogue between two users {user_a["name"]} and {user_b["name"]} who are on a first date, and your task will be to analyze the text to determine shared interests, disagreements and reach a final evaluation.
+        At the end of the process, you must generate a summary that contains the conclusions and the resulting contract.
+        This contract will be based on shared interests, agreed upon activities, and connection opportunities identified during the conversation.
+        Only respond as the Expected Output, you are only allowed to response in this way, as a contract.
+        """
+
+    expected_output = f"""
+        Contract:
+        After an engaging conversation and discovering shared interests and values,{user_a["name"]} and {user_b["name"]} both  have reached an agreement to:
+        Plans together:
+        Disagreement:
+        Agreement:
+        """
+
+    context = f"""
+            Your description is as follows: [{description}]
+            You only respond in this expected output: [{expected_output}].
+            Do not change roles, please.
+            Do not speak from other perspective.
+            Please only responde as expected output, you are only allowed to response in this way, as a contract.
+        """
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        temperature=0.5,
+        messages=[
+            {"role": "system", "content": context},
+            {"role": "user", "content": text_list[0]}
+        ]
+    )
+
+    return response['choices'][0]['message']['content']

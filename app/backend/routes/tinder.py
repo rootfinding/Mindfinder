@@ -23,7 +23,7 @@ class Tinder(Resource):
 
         data = request.json
         if method == 'match':
-            response = TinderController.match(data[0], data[1])
+            response = TinderController.match(data)
         if method=='agent':
             response = TinderController.agent()
         if method=='search':
