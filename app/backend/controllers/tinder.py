@@ -104,7 +104,8 @@ class TinderController:
 
         all_text = df['Text']
 
-        return {'contract': contract(user_a, user_b, text_list), 'simulation': text_list}
+        return {'contract': contract(user_a, user_b, text_list), 'simulation': text_list, 'description': user_b}
+
     def match_chandler(user_a):
 
         user_b = {
@@ -125,6 +126,9 @@ class TinderController:
         userB_system_message = generate_user(user_b, user_a)
         AGENT_B = PineconeDialogueAgent(
             name=user_b['name'],
+            old_questions_filter={
+                "answer_character": {"$eq": user_b['name'].split(' ')[0]}
+            },
             old_questions_namespace='friends-q',
             system_message=userB_system_message,
             model=ChatOpenAI(temperature=0.2),
@@ -138,7 +142,7 @@ class TinderController:
         id_list = []
         text_list = []
 
-        max_iters = 5
+        max_iters = 10
         n = 0
         while n < max_iters:
             name, message = simulator.step()
@@ -156,7 +160,7 @@ class TinderController:
 
         all_text = df['Text']
 
-        return {'contract': contract(user_a, user_b, text_list), 'simulation': text_list, 'description': user_b}
+        return {'contract': contract(user_a, user_b, text_list), 'simulation': text_list, 'chandler_message_history': AGENT_B.message_history}
 
     def feedback():
         return "feedback"
