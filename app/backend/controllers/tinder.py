@@ -17,7 +17,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
     SystemMessage,
 )
-from src.agent_type import DialogueAgent
+from src.agent_type import DialogueAgent, PineconeDialogueAgent
 from src.simulation_type import DialogueSimulator
 
 def select_next_speaker(step, agents):
@@ -74,6 +74,58 @@ class TinderController:
         userB_system_message = generate_user(user_b, user_a)
         AGENT_B = DialogueAgent(
             name=user_b['name'],
+            system_message=userB_system_message,
+            model=ChatOpenAI(temperature=0.2),
+        )
+
+        simulator = DialogueSimulator(
+            agents=[AGENT_B] + [AGENT_A], selection_function=select_next_speaker
+        )
+        simulator.reset()
+
+        id_list = []
+        text_list = []
+
+        max_iters = 5
+        n = 0
+        while n < max_iters:
+            name, message = simulator.step()
+            n += 1
+            id_list.append(name)
+            text_list.append(message)
+
+        df = pd.DataFrame({
+            'ID': id_list,
+            'Text': text_list
+        })
+
+        user_A_text = df[df['ID'] == user_a['name']]['Text']
+        user_B_text = df[df['ID'] == user_b['name']]['Text']
+
+        all_text = df['Text']
+
+        return {'contract': contract(user_a, user_b, text_list), 'simulation': text_list}
+    def match_chandler(user_a):
+
+        user_b = {
+            "name": "Chandler Bing",
+            "age": 34,
+            "location": "New York, NY",
+            "tastes": "humor, sarcasm, comic books, sports, and food",
+            "description": "Hi, I'm Chandler Bing, a connoisseur of humor and sarcasm. I enjoy spending my days making witty remarks, immersing myself in the world of comic books, following sports, and indulging in good food. I believe in the power of laughter and its ability to strengthen relationships. I'm seeking someone who appreciates humor, can keep up with my sarcasm, and doesn't mind a friendly sports rivalry. Bonus points if you love lasagna as much as I do! Swipe right if you're looking for companionship filled with laughter, witty banter, and plenty of unforgettable moments."
+        }
+
+        userA_system_message = generate_user(user_a, user_b)
+        AGENT_A = DialogueAgent(
+            name=user_a['name'],
+            system_message=userA_system_message,
+            model=ChatOpenAI(temperature=0.2),
+        )
+
+        userB_system_message = generate_user(user_b, user_a)
+        AGENT_B = PineconeDialogueAgent(
+            name=user_b['name'],
+            old_questions_namespace='friends-q',
             system_message=userB_system_message,
             model=ChatOpenAI(temperature=0.2),
         )

@@ -7,7 +7,7 @@ It exposes two methods:
 - `receive(name, message)`: adds the `message` spoken by `name` to message history
 
 """
-from typing import List, Dict, Callable
+from typing import List, Dict, Callable, Tuple
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
     HumanMessage,
@@ -81,13 +81,23 @@ class PineconeDialogueAgent:
     def reset(self):
         self.message_history = ["Here is the conversation so far."]
 
-    def get_old_questions(self, question: str) -> List[str]:
+    def get_old_questions(self, question: str) -> List[Tuple[str, str]]:
         """
         Querys the Pincone API to get old questions that look like the current question
         """
-        query(question, {
-
+        results = query(question, {
+            "answer_character": {"$eq": self.name}
         }, self.old_questions_namespace, 3)
+
+        if len(results) == 0:
+            return []
+
+        old_questions = []
+
+        for result in results:
+            old_questions.append((result["question"], result["answer"]))
+
+        return old_questions
 
 
     def send(self) -> str:
@@ -95,10 +105,26 @@ class PineconeDialogueAgent:
         Applies the chatmodel to the message history
         and returns the message string
         """
+
+        pre_prompt_h = "In the past I have been asked the following questions:"
+
+        # iterate message history backwards until we find the last question from the other agent
+        last_question_from_sender = 0
+        for j in range(len(self.message_history) - 1, -1, -1):
+            if not self.message_history[j].startswith(self.name):
+                last_question_from_sender = j
+
+        pre_prompt = []
+        # if we found a question, add the old questions to the message history
+        if last_question_from_sender > 0:
+            pre_prompt = [pre_prompt_h] + [f"{q}: {a}" for q, a in self.get_old_questions(self.message_history[last_question_from_sender])]
+
         message = self.model(
             [
                 self.system_message,
-                HumanMessage(content="\n".join(self.message_history + [self.prefix])),
+                HumanMessage(content="\n".join(
+                    self.message_history + pre_prompt + [self.prefix]
+                ))
             ]
         )
         return message.content

@@ -47,5 +47,30 @@ class Tinder(Resource):
             print("Simulating" + query_results['matches'][0]['metadata']['name'])
             response = TinderController.match(data, query_results['matches'][0]['metadata'])
             return response, 200
+        #           curl --request POST \
+        #               --url http://127.0.0.1:8081/api/tinder/match_chandler \
+        #                                      --header 'Content-Type: application/json' \
+        #                                               --data '{
+        #           "name": "Raquel Ameri",
+        #           "age": 25,
+        #           "location": "Buenos Aires, Ar",
+        #           "tastes": "art, music, photography, nature, and traveling",
+        #           "description": "Hello, I'\''m Raquel, a lover of art and music. I spend my days exploring
+        #               art galleries, attending concerts and enjoying the beauty of nature. Photography is
+        #               another of my passions, I love capturing special moments and finding the beauty in details.
+        #               I also enjoy traveling and immersing myself in different cultures. I believe that sharing
+        #               similar interests is essential to building a strong connection. I am looking for someone
+        #               with whom I can share deep conversations and moments filled with joy and fun. If you are
+        #               passionate about art, music and exploration, I'\''d love to meet you. Swipe right if
+        #               you'\''re ready to discover a world full of creativity and connection."
+        #       }'
+        elif method == 'match_chandler':
+            if not isinstance(data['name'], str):
+                return 'name is not a string', 400
+            if not isinstance(data['description'], str):
+                return 'description is not a string', 400
+
+            response = TinderController.match_chandler(data)
+            return response, 200
             
         return [], 204
