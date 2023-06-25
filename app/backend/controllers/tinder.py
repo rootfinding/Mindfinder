@@ -51,18 +51,16 @@ def generate_user(identity_agent, possible_match):
 
 
 class TinderController:
-    def account():
-        return ["account"]
+    def match(user_a, user_b=None):
 
-    def match(user_a):
-
-        user_b = {
-            "name": "Franco Franza",
-            "age": 31,
-            "location": "Buenos Aires, Ar",
-            "tastes": "technology, gaming, movies, cooking, and fitness",
-            "description": "Hi, I'm Franco, I'm passionate about technology and gaming. I love keeping up with the latest technology and spending time playing video games both solo and online with friends. I also enjoy watching movies of various genres and exploring cooking, experimenting with new recipes and flavors I also care about staying fit and exercising regularly I am looking for someone to share my enthusiasm for technology, games, cooking and fitness I think we have common interests it's important to building a strong and meaningful relationship. If you're ready to dive into a world of technology, fun and adventure, swipe right and let's start this exciting connection together."
-        }
+        if user_b is None:
+            user_b = {
+                "name": "Franco Franza",
+                "age": 31,
+                "location": "Buenos Aires, Ar",
+                "tastes": "technology, gaming, movies, cooking, and fitness",
+                "description": "Hi, I'm Franco, I'm passionate about technology and gaming. I love keeping up with the latest technology and spending time playing video games both solo and online with friends. I also enjoy watching movies of various genres and exploring cooking, experimenting with new recipes and flavors I also care about staying fit and exercising regularly I am looking for someone to share my enthusiasm for technology, games, cooking and fitness I think we have common interests it's important to building a strong and meaningful relationship. If you're ready to dive into a world of technology, fun and adventure, swipe right and let's start this exciting connection together."
+            }
 
         userA_system_message = generate_user(user_a, user_b)
         AGENT_A = DialogueAgent(
@@ -90,21 +88,15 @@ class TinderController:
         n = 0
         while n < max_iters:
             name, message = simulator.step()
-            print(f"({name}): {message}")
-            print("\n")
             n += 1
-
-            # Append to lists
             id_list.append(name)
             text_list.append(message)
 
-        # Create DataFrame
         df = pd.DataFrame({
             'ID': id_list,
             'Text': text_list
         })
 
-        # Separate the text from the candidate, interviewer, and all text
         user_A_text = df[df['ID'] == user_a['name']]['Text']
         user_B_text = df[df['ID'] == user_b['name']]['Text']
 
