@@ -50,19 +50,22 @@
                             <h5 class="card-title">Set up your account</h5>
                             <hr>
                             <div class="mb-3">
-                                <label class="form-label">Linkedln url</label>
-                                <div class="input-group">
-                                  <span class="input-group-text">https://www.linkedin.com/in/</span>
-                                  <input type="text" class="form-control" aria-describedby="basic-addon3 basic-addon4">
-                                </div>
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" v-model="name">
                             </div>
                             <hr>
                             <div class="mb-3">
-                              <label class="form-label">Linkedln profile</label>
-                              <textarea class="form-control" rows="3"></textarea>
+                                <label class="form-label">Age</label>
+                                <input type="number" class="form-control" v-model="age">
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark" @click="tinder_step_1=false; tinder_step_2=true">Save</button>
+                            <div class="mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" v-model="location">
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-outline-dark"
+                                @click="tinder_step_1=false; tinder_step_2=true">Next</button>
 
                         </div>
 
@@ -72,24 +75,28 @@
                             <h5 class="card-title">Set up your agent</h5>
                             <hr>
                             <div class="mb-3">
-                              <label class="form-label">What are you looking for</label>
-                              <textarea class="form-control" rows="3"></textarea>
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" v-model="tinder_agent.description"
+                                    rows="8">.</textarea>
                             </div>
                             <hr>
                             <div class="mb-3">
-                                <label class="form-label">Salary</label>
-                                <input type="range" class="form-range" min="0" step="100" max="1000000" v-model="tinder_agent.salary">
-                                $ {{ Number(tinder_agent.salary).toLocaleString() }}
+                                <label class="form-label">Tastes</label>
+                                <textarea class="form-control" v-model="tinder_agent.tastes"
+                                    rows="3"></textarea>
                             </div>
                             <hr>
                             <div class="mb-3">
                                 <label class="form-label">Constrains</label>
                                 <br>
-                                <input type="text" class="form-control mb-2" :key="constrain.id" v-for="constrain in tinder_agent.constrains">
-                                <button type="button" class="btn btn-outline-dark" @click="tinderAddConstrain">+</button>
+                                <input type="text" class="form-control mb-2" :key="constrain.id"
+                                    v-for="constrain in tinder_agent.constrains">
+                                <button type="button" class="btn btn-outline-dark"
+                                    @click="tinderAddConstrain">+</button>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark"  @click="tinder_step_2=false; tinder_step_3=true">Save</button>
+                            <button type="button" class="btn btn-outline-dark"
+                                @click="tinder_step_2=false; tinder_step_3=true">Next</button>
 
                         </div>
 
@@ -99,12 +106,14 @@
                             <h5 class="card-title">Search</h5>
                             <hr>
                             <div class="mb-3">
-                                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                                    <div class="progress-bar" style="width: 10%"></div>
+                                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="10"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" :style="{ width: progressWidth }"></div>
                                 </div>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark" @click="tinder_step_3=false; tinder_step_4=true">Search</button>
+                            <button type="button" class="btn btn-outline-dark"
+                                @click="matchSpinner(); match()">Search</button>
                         </div>
                     </div>
                     <div class="card mb-4" v-if="tinder_step_4">
@@ -113,50 +122,81 @@
                             <hr>
                             <div class="accordion">
                                 <div class="accordion-item">
-                                  <h2 class="accordion-header">
-                                    <button class="accordion-button" :class="tinder_accordion[0] ? '' : 'collapsed'" type="button" :aria-expanded="tinder_accordion[0] ? true : false" @click="tinderCollapse(0)">
-                                        Description
-                                    </button>
-                                  </h2>
-                                  <div class="accordion-collapse collapse" :class="tinder_accordion[0] ? 'show' : ''">
-                                    <div class="accordion-body">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. Maecenas vestibulum, lorem id varius feugiat, mauris leo vestibulum risus, at feugiat sapien eros eu urna. Duis euismod, erat sed luctus laoreet, felis lorem suscipit risus, ut tincidunt dolor neque ut lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus tincidunt nunc a tortor fermentum, ut commodo tellus elementum.
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" :class="tinder_accordion[0] ? '' : 'collapsed'"
+                                            type="button" :aria-expanded="tinder_accordion[0] ? true : false"
+                                            @click="tinderCollapse(0)">
+                                            Description
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" :class="tinder_accordion[0] ? 'show' : ''">
+                                        <div class="accordion-body">
+                                            <div class="mb-3">
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">Name</dt>
+                                                    <dd class="col-sm-9">{{ tinder_match.description.name }}</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">Age</dt>
+                                                    <dd class="col-sm-9">{{ tinder_match.description.age }}</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">Location</dt>
+                                                    <dd class="col-sm-9">{{ tinder_match.description.location }}</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">Tastes</dt>
+                                                    <dd class="col-sm-9">{{ tinder_match.description.tastes }}</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">Description</dt>
+                                                    <dd class="col-sm-9">{{ tinder_match.description.description }}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
                                 <div class="accordion-item">
-                                  <h2 class="accordion-header">
-                                    <button class="accordion-button" :class="tinder_accordion[1] ? '' : 'collapsed'" type="button" :aria-expanded="tinder_accordion[1] ? true : false" @click="tinderCollapse(1)">
-                                        Dialogue
-                                    </button>
-                                  </h2>
-                                  <div class="accordion-collapse collapse" :class="tinder_accordion[1] ? 'show' : ''">
-                                    <div class="accordion-body">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. Maecenas vestibulum, lorem id varius feugiat, mauris leo vestibulum risus, at feugiat sapien eros eu urna. Duis euismod, erat sed luctus laoreet, felis lorem suscipit risus, ut tincidunt dolor neque ut lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus tincidunt nunc a tortor fermentum, ut commodo tellus elementum.
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" :class="tinder_accordion[1] ? '' : 'collapsed'"
+                                            type="button" :aria-expanded="tinder_accordion[1] ? true : false"
+                                            @click="tinderCollapse(1)">
+                                            Dialogue
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" :class="tinder_accordion[1] ? 'show' : ''">
+                                        <div class="accordion-body">
+                                            <div v-for="(message, index) in tinder_match.dialogue" :key="index" :class="getMessageClasses(index)">
+                                                <div class="message-sender" v-if="index % 2 === 0">
+                                                  <p class="sender-message">{{ message }}</p>
+                                                </div>
+                                                <div class="message-receiver" v-else>
+                                                  <p class="receiver-message">{{ message }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
                                 <div class="accordion-item">
-                                  <h2 class="accordion-header">
-                                    <button class="accordion-button" :class="tinder_accordion[2] ? '' : 'collapsed'" type="button" :aria-expanded="tinder_accordion[2] ? true : false" @click="tinderCollapse(2)">
-                                        Agreements
-                                    </button>
-                                  </h2>
-                                  <div class="accordion-collapse collapse" :class="tinder_accordion[2] ? 'show' : ''">
-                                    <div class="accordion-body">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam vitae tellus vel aliquam. Fusce consequat tristique convallis. 
-                                        <ul>
-                                            <li>are unaffected by this style</li>
-                                            <li>will still show a bullet</li>
-                                            <li>and have appropriate left margin</li>
-                                        </ul>
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" :class="tinder_accordion[2] ? '' : 'collapsed'"
+                                            type="button" :aria-expanded="tinder_accordion[2] ? true : false"
+                                            @click="tinderCollapse(2)">
+                                            Agreements
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" :class="tinder_accordion[2] ? 'show' : ''">
+                                        <div class="accordion-body">
+                                            <lp v-for="(item, index) in contractItems" :key="index">{{ item }}</p>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-outline-dark" @click="tinder_step_4=false; tinder_step_5=true">Accept</button>
-                            <button type="button" class="btn btn-outline-dark mx-2" @click="tinder_step_4=false; tinder_step_6=true">Decline</button>
+                            <button type="button" class="btn btn-outline-dark"
+                                @click="tinder_step_4=false; tinder_step_5=true">Accept</button>
+                            <button type="button" class="btn btn-outline-dark mx-2"
+                                @click="tinder_step_4=false; tinder_step_6=true">Decline</button>
                         </div>
 
                     </div>
@@ -166,16 +206,12 @@
                             <hr>
                             <div class="mb-3">
                                 <dl class="row">
-                                    <dt class="col-sm-3">Name</dt>
-                                    <dd class="col-sm-9">Lorem ipsum dolor sit amet</dd>
-                                </dl>
-                                <dl class="row">
                                     <dt class="col-sm-3">Phone</dt>
-                                    <dd class="col-sm-9">Lorem ipsum dolor sit amet</dd>
+                                    <dd class="col-sm-9">-</dd>
                                 </dl>
                                 <dl class="row">
-                                    <dt class="col-sm-3">Mail</dt>
-                                    <dd class="col-sm-9">Lorem ipsum dolor sit amet</dd>
+                                    <dt class="col-sm-3">Email</dt>
+                                    <dd class="col-sm-9">-</dd>
                                 </dl>
                             </div>
                         </div>
@@ -185,8 +221,8 @@
                             <h5 class="card-title">Feedback</h5>
                             <hr>
                             <div class="mb-3">
-                              <label class="form-label">Comments</label>
-                              <textarea class="form-control" rows="3"></textarea>
+                                <label class="form-label">Comments</label>
+                                <textarea class="form-control" rows="3"></textarea>
                             </div>
                             <hr>
                             <button type="button" class="btn btn-outline-dark">Send</button>
@@ -200,15 +236,20 @@
         </footer>
     </div>
     <script>
-        const api_url = "http://localhost:8000/api/"
+        const api_url = "http://ec2-3-14-129-233.us-east-2.compute.amazonaws.com:8000/api/"
         const { createApp, ref } = Vue
         createApp({
             data() {
                 return {
-                    identifier: "",
+                    name: "Raquel Ameri",
+                    age: 25,
+                    location: "Buenos Aires, Ar",
                     tinder_agent: {
-                        salary: 0,
-                        constrains: []
+                        description: "Hello, I'm Raquel, a lover of art and music. I spend my days exploring art galleries, attending concerts and enjoying the beauty of nature. Photography is another of my passions, I love capturing special moments and finding the beauty in details. I also enjoy traveling and immersing myself in different cultures. I believe that sharing similar interests is essential to building a strong connection. I am looking for someone with whom I can share deep conversations and moments filled with joy and fun. If you are passionate about art, music and exploration, I'd love to meet you. Swipe right if you're ready to discover a world full of creativity and connection.",
+                        tastes: "Art, music, photography, nature, and traveling",
+                        constrains: [],
+                        match_spinner: false,
+                        match_counter: 0
                     },
                     tinder_accordion: [false, false, false],
                     step_0: true,
@@ -217,7 +258,20 @@
                     tinder_step_3: false,
                     tinder_step_4: false,
                     tinder_step_5: false,
-                    tinder_step_6: false
+                    tinder_step_6: false,
+                    tinder_match: {
+                        description: "",
+                        dialogue: "",
+                        agreements: ""
+                    }
+                }
+            },
+            computed: {
+                progressWidth() {
+                    return `${this.tinder_agent.match_counter * 4}%`;
+                },
+                contractItems() {
+                    return this.tinder_match.agreements.split("\n");
                 }
             },
             methods: {
@@ -231,9 +285,16 @@
                     this.tinder_accordion[key] = !this.tinder_accordion[key];
                     console.log(this.tinder_accordion[key])
                 },
-                async configAgent() {
-                    const body = {}
-                    const response = await fetch(api_url + "tinder/agent", {
+                async match() {
+                    const body = {
+                        name: this.name,
+                        age: this.age,
+                        location: this.location,
+                        description: this.tinder_agent.description,
+                        tastes: this.tinder_agent.tastes
+                    }
+                    this.tinder_agent.match_spinner = true
+                    const response = await fetch(api_url + "tinder/match", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -242,12 +303,56 @@
                     })
                     const data = await response.json()
                     if (response.status == 200) {
-                        console.log(data)
-                    } 
+                        this.tinder_step_3=false
+                        this.tinder_step_4=true
+                        this.tinder_agent.match_spinner = false
+                        this.tinder_match.agreements = data.contract
+                        this.tinder_match.dialogue = data.simulation
+                        this.tinder_match.description = data.description
+                    }
+                },
+                matchSpinner() {
+                    setInterval(() => {
+                        if (this.tinder_agent.match_spinner) {
+                            this.tinder_agent.match_counter++;
+                        }
+                    }, 1000);
+                },
+                getMessageClasses(index) {
+                    return {
+                        'chat-message': true,
+                        'message-sender': index % 2 === 0,
+                        'message-receiver': index % 2 !== 0
+                    };
                 }
             }
         }).mount("#app")
     </script>
+    <style>
+        .chat-message {
+          margin: 10px;
+          padding: 10px;
+          border-radius: 5px;
+        }
+        
+        .message-sender {
+          background-color: #f0f0f0;
+          text-align: right;
+        }
+        
+        .message-receiver {
+          background-color: #cfe2ff;
+          text-align: left;
+        }
+        
+        .sender-message {
+          color: #333;
+        }
+        
+        .receiver-message {
+          color: #000;
+        }
+    </style>
 </body>
 
 </html>
