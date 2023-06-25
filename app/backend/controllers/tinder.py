@@ -10,6 +10,8 @@ with open('.creds') as f:
     OPENAI_API_KEY = creds['OPENAI_API_KEY']
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+openai.api_key = OPENAI_API_KEY
+
 
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
