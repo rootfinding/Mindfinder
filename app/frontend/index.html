@@ -25,27 +25,26 @@
         <main>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card mb-4" v-if="step_0">
+                    <div class="card mb-4" v-if="login">
                         <div class="card-body">
-                            <h5 class="card-title">Select</h5>
+                            <h5 class="card-title">Login</h5>
                             <hr>
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="#" @click="step_0=false; tinder_step_1=true">
-                                        <img src="assets/tinder.png" class="card-img-top">
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="#">
-                                        <img src="assets/linkedin.png" class="card-img-top">
-                                    </a>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">User</label>
+                                <input type="text" class="form-control" v-model="user">
                             </div>
+                            <hr>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" v-model="password">
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-outline-dark" @click="doLogin()">Login</button>
 
                         </div>
 
                     </div>
-                    <div class="card mb-4" v-if="tinder_step_1">
+                    <div class="card mb-4" v-if="step_0">
                         <div class="card-body">
                             <h5 class="card-title">Set up your account</h5>
                             <hr>
@@ -65,25 +64,36 @@
                             </div>
                             <hr>
                             <button type="button" class="btn btn-outline-dark"
-                                @click="tinder_step_1=false; tinder_step_2=true">Next</button>
+                                @click="step_0=false; step_1=true">Next</button>
+
+                        </div>
+
+                    </div>
+                    <div class="card mb-4" v-if="step_1">
+                        <div class="card-body">
+                            <h5 class="card-title">Create your first agent</h5>
+                            <hr>
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-outline-dark"
+                                    @click="step_1=false; tinder_step_2=true">Love</button>
+                                <button type="button" class="btn btn-outline-dark" disabled>Job</button>
+                            </div>
 
                         </div>
 
                     </div>
                     <div class="card mb-4" v-if="tinder_step_2">
                         <div class="card-body">
-                            <h5 class="card-title">Set up your agent</h5>
+                            <h5 class="card-title">Set up your love agent</h5>
                             <hr>
                             <div class="mb-3">
                                 <label class="form-label">Description</label>
-                                <textarea class="form-control" v-model="tinder_agent.description"
-                                    rows="8">.</textarea>
+                                <textarea class="form-control" v-model="tinder_agent.description" rows="8">.</textarea>
                             </div>
                             <hr>
                             <div class="mb-3">
                                 <label class="form-label">Tastes</label>
-                                <textarea class="form-control" v-model="tinder_agent.tastes"
-                                    rows="3"></textarea>
+                                <textarea class="form-control" v-model="tinder_agent.tastes" rows="3"></textarea>
                             </div>
                             <hr>
                             <div class="mb-3">
@@ -166,12 +176,13 @@
                                     </h2>
                                     <div class="accordion-collapse collapse" :class="tinder_accordion[1] ? 'show' : ''">
                                         <div class="accordion-body">
-                                            <div v-for="(message, index) in tinder_match.dialogue" :key="index" :class="getMessageClasses(index)">
+                                            <div v-for="(message, index) in tinder_match.dialogue" :key="index"
+                                                :class="getMessageClasses(index)">
                                                 <div class="message-sender" v-if="index % 2 === 0">
-                                                  <p class="sender-message">{{ message }}</p>
+                                                    <p class="sender-message">{{ message }}</p>
                                                 </div>
                                                 <div class="message-receiver" v-else>
-                                                  <p class="receiver-message">{{ message }}</p>
+                                                    <p class="receiver-message">{{ message }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -241,18 +252,21 @@
         createApp({
             data() {
                 return {
-                    name: "Raquel Ameri",
-                    age: 25,
-                    location: "Buenos Aires, Ar",
+                    user: "",
+                    password: "",
+                    name: "",
+                    age: "",
+                    location: "",
                     tinder_agent: {
-                        description: "Hello, I'm Raquel, a lover of art and music. I spend my days exploring art galleries, attending concerts and enjoying the beauty of nature. Photography is another of my passions, I love capturing special moments and finding the beauty in details. I also enjoy traveling and immersing myself in different cultures. I believe that sharing similar interests is essential to building a strong connection. I am looking for someone with whom I can share deep conversations and moments filled with joy and fun. If you are passionate about art, music and exploration, I'd love to meet you. Swipe right if you're ready to discover a world full of creativity and connection.",
-                        tastes: "Art, music, photography, nature, and traveling",
+                        description: "",
+                        tastes: "",
                         constrains: [],
                         match_spinner: false,
                         match_counter: 0
                     },
                     tinder_accordion: [false, false, false],
-                    step_0: true,
+                    login: true,
+                    step_0: false,
                     tinder_step_1: false,
                     tinder_step_2: false,
                     tinder_step_3: false,
@@ -275,6 +289,22 @@
                 }
             },
             methods: {
+                doLogin() {
+                    const valid_users = ["fede", "test", "mery"]
+                    const valid_password_hash = 1173
+                    password_hash = this.simpleHash(this.password)
+                    if (valid_users.includes(this.user) && password_hash==valid_password_hash) {
+                        this.login = false
+                        this.step_0 = true
+                        if (this.user=="test") {
+                            this.name = "Raquel Ameri"
+                            this.age = 25
+                            this.location = "Buenos Aires, Ar"
+                            this.tinder_agent.description = "Hello, I'm Raquel, a lover of art and music. I spend my days exploring art galleries, attending concerts and enjoying the beauty of nature. Photography is another of my passions, I love capturing special moments and finding the beauty in details. I also enjoy traveling and immersing myself in different cultures. I believe that sharing similar interests is essential to building a strong connection. I am looking for someone with whom I can share deep conversations and moments filled with joy and fun. If you are passionate about art, music and exploration, I'd love to meet you. Swipe right if you're ready to discover a world full of creativity and connection."
+                            this.tinder_agent.tastes = "Art, music, photography, nature, and traveling"
+                        }
+                    }
+                },
                 tinderAddConstrain() {
                     const constrain = {
                         id: Date.now(),
@@ -303,8 +333,8 @@
                     })
                     const data = await response.json()
                     if (response.status == 200) {
-                        this.tinder_step_3=false
-                        this.tinder_step_4=true
+                        this.tinder_step_3 = false
+                        this.tinder_step_4 = true
                         this.tinder_agent.match_spinner = false
                         this.tinder_match.agreements = data.contract
                         this.tinder_match.dialogue = data.simulation
@@ -324,33 +354,40 @@
                         'message-sender': index % 2 === 0,
                         'message-receiver': index % 2 !== 0
                     };
+                },
+                simpleHash(input) {
+                    let hash = 0;
+                    for (let i = 0; i < input.length; i++) {
+                        hash += input.charCodeAt(i);
+                    }
+                    return hash;
                 }
             }
         }).mount("#app")
     </script>
     <style>
         .chat-message {
-          margin: 10px;
-          padding: 10px;
-          border-radius: 5px;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
         }
-        
+
         .message-sender {
-          background-color: #f0f0f0;
-          text-align: right;
+            background-color: #f0f0f0;
+            text-align: right;
         }
-        
+
         .message-receiver {
-          background-color: #cfe2ff;
-          text-align: left;
+            background-color: #cfe2ff;
+            text-align: left;
         }
-        
+
         .sender-message {
-          color: #333;
+            color: #333;
         }
-        
+
         .receiver-message {
-          color: #000;
+            color: #000;
         }
     </style>
 </body>
